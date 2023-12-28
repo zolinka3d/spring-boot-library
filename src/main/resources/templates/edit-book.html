@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>Start Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+<!-- include the fragment for login, register and logout buttons -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<!-- create a container wil ul li and map books to it -->
+
+<div class="container mt-5">
+
+    <hr>
+
+    <div class="container">
+
+        <p class="h4 mb-4">Update this book</p>
+        <form action="#" th:action="@{/books/save}"
+              th:object="${book}" method="POST">
+            <!-- Add hidden form to handle the update -->
+            <input type="hidden" th:field="*{id}">
+            <input type="text" th:field="*{title}"
+                   class="form-control mb-4 w-25" placeholder="Title">
+            <div th:if="${#fields.hasErrors('title')}"
+                 style="margin-bottom: 25px" class="text-danger">
+                <ul>
+                    <p th:each="err : ${#fields.errors('title')}" th:text="${err}" class="text-danger"></p>
+                </ul>
+            </div>
+            <input type="text" th:field="*{cover}"
+                   class="form-control mb-4 w-25" placeholder="Cover">
+            <div th:if="${#fields.hasErrors('cover')}"
+                 style="margin-bottom: 25px" class="text-danger">
+                <ul>
+                    <p th:each="err : ${#fields.errors('cover')}" th:text="${err}" class="text-danger"></p>
+                </ul>
+            </div>
+            <input type="text" th:field="*{description}"
+                   class="form-control mb-4 w-25" placeholder="Description">
+            <div th:if="${#fields.hasErrors('description')}"
+                 style="margin-bottom: 25px" class="text-danger">
+                <ul>
+                    <p th:each="err : ${#fields.errors('description')}" th:text="${err}" class="text-danger"></p>
+                </ul>
+            </div>
+            <input type="date" th:field="*{releaseDate}"
+                   class="form-control mb-4 w-25" placeholder="Release date">
+            <div th:if="${#fields.hasErrors('releaseDate')}"
+                 style="margin-bottom: 25px" class="text-danger">
+                <ul>
+                    <p th:each="err : ${#fields.errors('releaseDate')}" th:text="${err}" class="text-danger"></p>
+                </ul>
+            </div>
+            <button type="submit" class="btn btn-info btn-sm col-2">Save</button>
+        </form>
+
+    </div>
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+<!-- make from this code a fragment for other file -->
+
+<div th:fragment="login-register-logout-buttons">
+    <form action="#" th:action="@{/logout} "  th:if="${session.user}"
+          method="POST">
+
+        <input type="submit" value="Logout" class="btn btn-secondary" />
+
+    </form>
+
+    <div class="btn-group" th:unless="${session.user}">
+        <div>
+            <a th:href="@{/register/showRegistrationForm}" class="btn btn-secondary m-2" role="button" aria-pressed="true">Register</a>
+        </div>
+        <div>
+            <a th:href="@{/showMyLoginPage}" class="btn btn-light m-2" role="button" aria-pressed="true">Login</a>
+        </div>
+    </div>
+</div>

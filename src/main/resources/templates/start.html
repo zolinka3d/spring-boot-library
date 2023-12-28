@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <title>Start Page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+<!-- include the fragment for login, register and logout buttons -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<!-- create a container wil ul li and map books to it -->
+
+<div class="container mt-5">
+  <ul class="list-group">
+    <li class="card mb-3" th:each="book : ${books}">
+      <h4 class="card-header " th:text="${book.title}"></h4>
+        <div class="card-body row">
+          <img th:src="${book.cover}" class="card-img-top col-sm" alt="...">
+
+          <div class="col-sm list-group">
+            <div class=" card">
+              <div class="card-header">Description</div>
+              <p class="card-text col-sm card-body" th:text="${book.description}"></p>
+            </div>
+            <div class=" card">
+              <div class="card-header">Author</div>
+              <p class="card-text col-sm card-body">future author</p>
+            </div>
+
+          </div>
+          <div class="list-group">
+            <a sec:authorize="hasRole('ADMIN')"
+                    th:if="${session.user}"
+                    class="btn btn-danger mb-3"
+                    th:href="@{/books/delete(bookId=${book.id})}"
+                    >
+              Delete this book
+            </a>
+            <a sec:authorize="hasRole('ADMIN')"
+               th:if="${session.user}"
+               class="btn btn-warning"
+               th:href="@{/books/showFormForUpdate(bookId=${book.id})}"
+            >
+              Edit this book
+            </a>
+          </div>
+        </div>
+        <div class="card-footer text-muted">
+          <p class="card-text" th:text="${book.releaseDate}"></p>
+        </div>
+    </li>
+  </ul>
+  <hr>
+
+
+</div>
+
+</body>
+
+</html>
